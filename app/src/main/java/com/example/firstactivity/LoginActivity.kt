@@ -1,11 +1,14 @@
 package com.example.firstactivity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
+import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import java.util.regex.Matcher
+
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,17 +26,36 @@ class LoginActivity : AppCompatActivity() {
             val msgPassword: String = edtPassword.text.toString()
 
             ///check
-            if (msgEmail.trim()==email && msgPassword.trim() == password){
-                val intent =  Intent(this@LoginActivity, HomeActivity::class.java)
+
+//
+            if (edtEmail.text.toString().isEmpty()) {
+                edtEmail.error = "Username harus terisi"
+                return@setOnClickListener
+            }
+            if (edtPassword.text.toString().isEmpty()) {
+                edtPassword.error = "Password harus terisi"
+                return@setOnClickListener
+            }
+            if (msgEmail.isEmailValid() && msgPassword.isPasswordValid()){
+                val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
-            }else if(msgEmail.trim().length>0 && msgPassword.trim().length>0){
-            Toast.makeText(applicationContext, "Login....$msgEmail", Toast.LENGTH_SHORT).show()
-        }else if ( msgPassword.trim().length>8){
-            Toast.makeText(applicationContext, "Password yang anda masukkan kurang", Toast.LENGTH_SHORT).show()
-        }else{
-            Toast.makeText(applicationContext, "Masukkan Email dan Password", Toast.LENGTH_SHORT).show()
-        }
+            }
         }
 
+
     }
+
+    private fun String.isPasswordValid(): Boolean {
+        return !TextUtils.isEmpty(this) && this.matches(Regex("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~\$^+=<>]).{8,20}\$"))
+    }
+
+    private fun String.isEmailValid(): Boolean {
+        return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this)
+            .matches()
+    }
+//    fun isEmailValid(email: String?): Boolean {
+//        val pattern = Patterns.EMAIL_ADDRESS
+//        val matcher: Matcher = pattern.matcher(email)
+//        return matcher.matches()
+//    }
 }

@@ -8,6 +8,7 @@
     tools:context=".MainActivity">
 
     <EditText
+        android:layout_marginTop="70dp"
         android:gravity="center"
         android:id="@+id/input"
         android:inputType="text"
@@ -22,6 +23,7 @@
         android:text="Click Di sini"/>
     <Button
         android:id="@+id/soal_dua"
+        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="soal_dua"
@@ -29,7 +31,8 @@
     <Button
         android:id="@+id/soal_tiga"
         android:layout_width="wrap_content"
+        android:layout_gravity="center"
         android:layout_height="wrap_content"
         android:onClick="soal_tiga"
-        android:text="Soal no 2"/>
+        android:text="Soal NO 3"/>
 </LinearLayout>

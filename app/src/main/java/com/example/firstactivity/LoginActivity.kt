@@ -44,6 +44,10 @@ class LoginActivity : AppCompatActivity() {
             if (edtEmail.text.toString().isEmailValid() ){
                 val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                 startActivity(intent)
+            }else{
+                edtEmail.error = "Tidak Sesuai ketentuan email"
+                Toast.makeText( this.applicationContext,"Tidak Sesuai ketentuan email", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
             if (isValidPassword(edtPassword.getText().toString().trim())) {
                 Toast.makeText( this.applicationContext,"valid...", Toast.LENGTH_SHORT).show()

@@ -53,6 +53,10 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText( this.applicationContext,"valid...", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                 startActivity(intent)
+            }else{
+                edtPassword.error = "Password tidak mengandung huruf dan angka"
+                Toast.makeText( this.applicationContext,"Password tidak mengandung huruf dan angka", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
         }
 

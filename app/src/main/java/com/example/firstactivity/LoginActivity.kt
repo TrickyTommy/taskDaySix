@@ -37,7 +37,10 @@ class LoginActivity : AppCompatActivity() {
                 edtPassword.error = "Password harus terisi"
                 return@setOnClickListener
             }
-//            if()
+            if(msgPassword.length<8){
+                Toast.makeText( this.applicationContext,"password Kurang dari 8 ", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             if (edtEmail.text.toString().isEmailValid() ){
                 val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                 startActivity(intent)
@@ -63,7 +66,6 @@ class LoginActivity : AppCompatActivity() {
 
     private fun String.isEmailValid(): Boolean {
         val pattern = Patterns.EMAIL_ADDRESS.matcher(this).matches()
-
         return pattern
     }
 

@@ -44,6 +44,8 @@ class LoginActivity : AppCompatActivity() {
             }
             if (isValidPassword(edtPassword.getText().toString().trim())) {
                 Toast.makeText( this.applicationContext,"valid...", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+                startActivity(intent)
             }
         }
 

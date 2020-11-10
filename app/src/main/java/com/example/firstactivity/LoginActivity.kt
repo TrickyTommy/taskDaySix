@@ -2,12 +2,13 @@ package com.example.firstactivity
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 
 class LoginActivity : AppCompatActivity() {
@@ -20,8 +21,8 @@ class LoginActivity : AppCompatActivity() {
         val btnLogin = findViewById<Button>(R.id.Login)
 
         btnLogin.setOnClickListener {
-            val password = "sekolah123"
-            val email = "sekolah@id"
+//            val password = "sekolah123"
+//            val email = "sekolah@id"
             val msgEmail: String = edtEmail.text.toString()
             val msgPassword: String = edtPassword.text.toString()
 
@@ -36,26 +37,32 @@ class LoginActivity : AppCompatActivity() {
                 edtPassword.error = "Password harus terisi"
                 return@setOnClickListener
             }
-            if (msgEmail.isEmailValid() && msgPassword.isPasswordValid()){
-                val intent = Intent(this, HomeActivity::class.java)
+//            if()
+            if (edtEmail.text.toString().isEmailValid() ){
+                val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                 startActivity(intent)
+            }
+            if (isValidPassword(edtPassword.getText().toString().trim())) {
+                Toast.makeText( this.applicationContext,"valid...", Toast.LENGTH_SHORT).show()
             }
         }
 
 
     }
 
-    private fun String.isPasswordValid(): Boolean {
-        return !TextUtils.isEmpty(this) && this.matches(Regex("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~\$^+=<>]).{8,20}\$"))
+    fun isValidPassword(password: String?): Boolean {
+        val pattern: Pattern
+        val matcher: Matcher
+        val PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$"
+        pattern = Pattern.compile(PASSWORD_PATTERN)
+        matcher = pattern.matcher(password)
+        return matcher.matches()
     }
 
     private fun String.isEmailValid(): Boolean {
-        return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this)
-            .matches()
+        val pattern = Patterns.EMAIL_ADDRESS.matcher(this).matches()
+
+        return pattern
     }
-//    fun isEmailValid(email: String?): Boolean {
-//        val pattern = Patterns.EMAIL_ADDRESS
-//        val matcher: Matcher = pattern.matcher(email)
-//        return matcher.matches()
-//    }
+
 }
